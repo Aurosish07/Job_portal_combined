@@ -1,18 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectDB } from "./config/db.js"
-import router from "./routes/authRoutes.js"
+import { connectDB } from "./config/db.js";
+import router from "./routes/authRoutes.js";
 import router2 from "./routes/roleRoutes.js";
 import router3 from "./routes/jobRoutes.js";
-import bodyParser from "body-parser"
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path"
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const port = process.env.PORT || 80;
 const app = express();
+
+// Get __dirname equivalent in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : 'http://localhost:3000',
@@ -33,21 +38,20 @@ app.use(cookieParser());
 
 connectDB();
 
-//Root Endpoint
+// Root Endpoint
 // app.get("/", (req, resp) => {
 //     resp.sendStatus(200);
 // })
 
-//Api main endpoint
+// Api main endpoint
 app.use("/api/auth", router);
 
-//Roleauth Endpoint
+// Roleauth Endpoint
 app.use("/api/role", router2);
 
-//job routes
+// Job routes
 app.use("/api/role/employer", router3);
 
-
 app.listen(port, () => {
-    console.log(`Server is Running on http://localhost:${port}`)
-})
+    console.log(`Server is Running on http://localhost:${port}`);
+});

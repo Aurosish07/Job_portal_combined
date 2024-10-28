@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run dev --prefix Genica_back-end\" \"npm run start --prefix Job_React\"",
     "build": "npm run build --prefix Job_React",
-    "start-backend": "npm run dev --prefix Genica_back-end",
+    "start-backend": "npm run prod --prefix Genica_back-end",
     "start-frontend": "npm run start --prefix Job_React"
   },
   "keywords": [],
