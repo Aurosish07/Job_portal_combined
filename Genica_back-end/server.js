@@ -24,7 +24,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : 'http://localhost:3000',
+    origin: 'https://job-portal-combined.onrender.com',
     credentials: true
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
