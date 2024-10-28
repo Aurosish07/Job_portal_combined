@@ -1,0 +1,45 @@
+header{
+  background-color: #ffffffde;
+}
+.profile li{
+  margin: 0 10px;
+}
+form{
+  margin-left: 15px;
+  width: 450px;
+}
+form .btn i{
+  color: #1E55B3;
+}
+.form-control{
+  padding: .375rem 0.5rem;
+}
+.form-control:focus{
+  border-color: rgba(182, 145, 147, 0.829);
+  box-shadow: 0 0 0;
+}
+.navbar{
+  background-color: #35B6FF;
+}
+.navbar-collapse{
+  justify-content: end;
+}
+.navbar-collapse ul li{
+  margin: 0 5px;
+}
+.nav-link{
+  font-weight: 600;
+  color: #fff !important;
+}
+.login_btn{
+  background-color: #35B6FF;
+  border-radius: 5px;
+}
+.dropdown-menu{
+  border: 1px solid #35B6FF;
+}
+
+.dropdown-item.active{
+  background-color: #fff;
+  color: #000;
+}

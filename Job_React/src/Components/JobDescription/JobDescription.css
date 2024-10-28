@@ -1,0 +1,76 @@
+/* Main container styling */
+main {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+/* Job description container */
+.job-description {
+  max-width: 90vw;
+  margin: 20px auto; /* Centering the container */
+  padding: 30px; /* Increased padding for more spacing */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #ECF0F1; /* Light grey background */
+}
+
+/* Job title styling */
+.job-description h2 {
+  color: #333;
+  font-size: 1.8em; /* Increased font size for emphasis */
+  margin-bottom: 10px; /* Margin below the title */
+}
+
+/* Company name styling */
+.job-description p:first-of-type {
+  color: #777;
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+/* Section heading styling */
+.job-description p {
+  color: #555;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+
+/* Sub-heading styling */
+.job-description h3 {
+  margin-top: 20px;
+  color: #1E55B3;
+  font-size: 1.4em; /* Slightly increased font size */
+}
+
+/* Paragraph and list item styling */
+.job-description p, 
+.job-description ul {
+  color: #555;
+  line-height: 1.6; /* Improved line height for readability */
+  font-size: 1em;
+}
+
+/* List styling */
+.job-description ul {
+  padding-left: 20px;
+  list-style-type: disc; /* Disc style for list items */
+  margin-top: 10px;
+}
+
+/* Apply button styling */
+.apply-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #35B6FF; /* Primary button color */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-weight: bold; /* Bold font for emphasis */
+}
+
+/* Hover effect for apply button */
+.apply-btn:hover {
+  background-color: #27b0ff;
+}

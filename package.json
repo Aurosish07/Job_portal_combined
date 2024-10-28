@@ -1,0 +1,17 @@
+{
+  "name": "job_portal_combined",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "concurrently \"npm run dev --prefix Genica_back-end\" \"npm run start --prefix Job_React\"",
+    "build": "npm run build --prefix Job_React && npm run build --prefix Genica_back-end",
+    "start-backend": "npm run dev --prefix Genica_back-end",
+    "start-frontend": "npm run start --prefix Job_React"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

@@ -1,0 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+}
+a{
+  text-decoration: none;
+}
+@media (min-width: 1200px) {
+  .h1, h1 {
+      font-size: 1.6rem;
+      font-weight: 400;
+  }
+}

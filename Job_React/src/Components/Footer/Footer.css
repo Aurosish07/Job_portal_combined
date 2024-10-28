@@ -1,0 +1,23 @@
+.footer_wrapper{
+  background-image: url('/src/Image/SVG/wave.svg');
+  background-color:#0954d6d7;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.footer_wrapper ul{
+  padding: 0;
+}
+.footer_wrapper h5{
+  font-size: 17px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: #dfdfdf;
+  font-weight: 600;
+}
+.footer_wrapper ul li{
+  margin-top: 10px;
+}
+.footer_wrapper ul li a{
+  color: aliceblue;
+  font-weight: 400;
+}
