@@ -34,7 +34,7 @@ app.use(cookieParser());
 // API Routes
 app.use("/api/auth", authRoutes);        // Authentication routes
 app.use("/api/role", roleRoutes);        // Role-based routes
-app.use("/api/jobs", jobRoutes);         // Job-related routes
+app.use("/api/role/employer", jobRoutes);         // Job-related routes
 
 // Serve Static Files in Production
 if (process.env.NODE_ENV === 'production') {
