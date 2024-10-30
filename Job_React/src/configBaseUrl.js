@@ -1,8 +1,8 @@
 const dev = "http://localhost:5000";
-// const prod = "http://13.60.38.214:5001";
+const prod = "https://job-portal-combined.onrender.com";
 
 const baseUrl = {
-    mainUrl: `${dev}`,
+    mainUrl: `${prod}`,
 }
 
 export default baseUrl;
