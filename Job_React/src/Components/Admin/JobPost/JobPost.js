@@ -11,13 +11,11 @@ function JobPost() {
   const [company, setCompany] = useState('');
   const [error, setError] = useState('');
   
-  // useNavigate hook for navigation
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Create an object with all the fields
     const jobData = {
       title,
       description,
@@ -28,20 +26,18 @@ function JobPost() {
     };
 
     try {
-      // Make a POST request to the backend API with the job data
       const response = await fetch(`${baseUrl.mainUrl}/api/role/employer/job`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(jobData),
-        credentials: 'include', // Include credentials in the request
+        credentials: 'include',
       });
 
       const result = await response.json();
       if (response.status === 200) {
         console.log(result);
-        // Navigate to the job list page upon successful job creation
         navigate("/admin/joblist");
       } else {
         console.log(result);
@@ -54,121 +50,137 @@ function JobPost() {
     }
   };
 
-  return (
-    <>
-      <div id="layoutSidenav_content">
-        <main>
-          <div className="py-2 bg-white ps-4">
-            <span><Link to="/">Home</Link></span>
-            <span className="px-2">&#47;</span>
-            <span>Job Post</span>
-          </div>
-          <div className="container-fluid px-4 py-2">
-            <div className="row">
-              <div className="col-xl-8 col-md-12">
-                <div className="card mb-4">
-                  <div className="card-header">
-                    <i className="fas fa-plus-circle me-1"></i>
-                    Create a Job Post
-                  </div>
-                  <div className="card-body">
-                    <form onSubmit={handleSubmit}>
-                      {error && <p className="text-danger">{error}</p>}
-                      <div className="mb-3">
-                        <label htmlFor="jobTitle" className="form-label">Job Title</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="jobTitle"
-                          value={title}
-                          onChange={(e) => setTitle(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="jobDescription" className="form-label">Job Description</label>
-                        <textarea
-                          className="form-control"
-                          id="jobDescription"
-                          rows="3"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        ></textarea>
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="jobRequirements" className="form-label">Requirements</label>
-                        <textarea
-                          className="form-control"
-                          id="jobRequirements"
-                          rows="3"
-                          value={requirements}
-                          onChange={(e) => setRequirements(e.target.value)}
-                        ></textarea>
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="jobLocation" className="form-label">Location</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="jobLocation"
-                          value={location}
-                          onChange={(e) => setLocation(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="jobSalary" className="form-label">Salary</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="jobSalary"
-                          value={salary}
-                          onChange={(e) => setSalary(e.target.value)}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="jobCompany" className="form-label">Company</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="jobCompany"
-                          value={company}
-                          onChange={(e) => setCompany(e.target.value)}
-                        />
-                      </div>
-                      <button type="submit" className="btn btn-primary">Post Job</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '16px'
+  };
 
-              {/* Placeholder for Charts or Additional Info */}
-              <div className="col-xl-4 col-md-6">
-                <div className="card mb-4">
-                  <div className="card-header">
-                    <i className="fas fa-info-circle me-1"></i>
-                    Additional Information
-                  </div>
-                  <div className="card-body">
-                    <p>Include any charts or stats here.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
-        <footer className="py-4 bg-light mt-auto">
-          <div className="container-fluid px-4">
-            <div className="d-flex align-items-center justify-content-between small">
-              <div className="text-muted">Copyright &copy; 2024</div>
-              <div>
-                <Link to="#">Privacy Policy</Link>
-                &middot;
-                <Link to="#">Terms &amp; Conditions</Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '8px',
+    fontWeight: 'bold'
+  };
+
+  return (
+    <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Create a Job Post</h1>
+        <nav>
+          <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none' }}>Home</Link>
+          <span style={{ margin: '0 8px' }}>/</span>
+          <span>Job Post</span>
+        </nav>
       </div>
-    </>
+
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: '2' }}>
+          <form onSubmit={handleSubmit}>
+            {error && <p style={{ color: '#ef4444', marginBottom: '16px' }}>{error}</p>}
+            
+            <div>
+              <label htmlFor="jobTitle" style={labelStyle}>Job Title</label>
+              <input
+                type="text"
+                id="jobTitle"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="jobDescription" style={labelStyle}>Job Description</label>
+              <textarea
+                id="jobDescription"
+                rows="3"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                style={inputStyle}
+              ></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="jobRequirements" style={labelStyle}>Requirements</label>
+              <textarea
+                id="jobRequirements"
+                rows="3"
+                value={requirements}
+                onChange={(e) => setRequirements(e.target.value)}
+                style={inputStyle}
+              ></textarea>
+            </div>
+
+            <div>
+              <label htmlFor="jobLocation" style={labelStyle}>Location</label>
+              <input
+                type="text"
+                id="jobLocation"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="jobSalary" style={labelStyle}>Salary</label>
+              <input
+                type="text"
+                id="jobSalary"
+                value={salary}
+                onChange={(e) => setSalary(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="jobCompany" style={labelStyle}>Company</label>
+              <input
+                type="text"
+                id="jobCompany"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                style={inputStyle}
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              style={{
+                backgroundColor: '#3b82f6',
+                color: 'white',
+                padding: '10px 20px',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '16px',
+                cursor: 'pointer'
+              }}
+            >
+              Post Job
+            </button>
+          </form>
+        </div>
+
+        <div style={{ flex: '1' }}>
+          <div style={{ border: '1px solid #e5e7eb', borderRadius: '8px', padding: '16px' }}>
+            <h2 style={{ fontSize: '20px', marginBottom: '16px' }}>Additional Information</h2>
+            <p>Include any charts or stats here.</p>
+          </div>
+        </div>
+      </div>
+
+      <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
+        <p>&copy; 2024 EINCA. All rights reserved.</p>
+        <div style={{ marginTop: '8px' }}>
+          <Link to="#" style={{ color: '#3b82f6', textDecoration: 'none' }}>Privacy Policy</Link>
+          <span style={{ margin: '0 8px' }}>•</span>
+          <Link to="#" style={{ color: '#3b82f6', textDecoration: 'none' }}>Terms &amp; Conditions</Link>
+        </div>
+      </footer>
+    </div>
   );
 }
 

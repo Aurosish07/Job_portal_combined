@@ -1,13 +1,19 @@
-import React from 'react';
+import React , {useState} from 'react';
 import './SideNavbar.css';
 import bagicon from '../../../Image/briefcase.png';
 import { Link, NavLink } from 'react-router-dom';
 
 function SideNavbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <div id="layoutSidenav" className='d-flex'>
-        <div id="layoutSidenav_nav">
+        <div id="layoutSidenav_nav" className={isOpen ? 'open' : ''}>
           <nav className="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <li className="nav-item">
               <Link className="nav-link d-flex layoutSidenav_nav_heading rounded" to='/admin'>
@@ -21,7 +27,7 @@ function SideNavbar() {
 
                 <li class="nav-item dropdown">
                   <NavLink className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa-solid fa-briefcase"></i>
+                    <i class="fa-solid fa-briefcase"></i>
                     <span style={{ marginLeft: '10px' }}>Jobs</span>
                   </NavLink>
 
@@ -38,54 +44,24 @@ function SideNavbar() {
                     </li>
                   </ul>
                 </li>
-
-                <li className="nav-item">
-                  <Link className="nav-link d-flex" to='#'>
-                    <div className="sb-nav-link-icon"><i className="fas fa-tachometer-alt"></i></div>
-                    Typography
-                  </Link>
-                </li>
-
-                <div className="sb-sidenav-menu-heading">Components</div>
-                <li className="nav-item">
-                  <Link className="nav-link d-flex" to="#">
-                    <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
-                    Base
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link d-flex" to="#">
-                    <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
-                    Pages
-                  </Link>
-                </li>
-
-                <div className="sb-sidenav-menu-heading">Addons</div>
-
-                <li className="nav-item">
-                  <Link className="nav-link d-flex" to="charts.html">
-                    <div className="sb-nav-link-icon"><i className="fas fa-chart-area"></i></div>
-                    Charts
-                  </Link>
-                </li>
-
-                <li className="nav-item">
-                  <Link className="nav-link d-flex" to="tables.html">
-                    <div className="sb-nav-link-icon"><i className="fas fa-table"></i></div>
-                    Tables
-                  </Link>
-                </li>
-
               </div>
             </div>
             <div className="sb-sidenav-footer">
 
             </div>
           </nav>
-          </div>
+
         </div>
-      </>
-      )
+        <div id="layoutSidenav_content">
+
+          <button className="hamburger-menu" onClick={toggleSidebar}>
+            <i className="fas fa-bars"></i>
+          </button>
+
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default SideNavbar;

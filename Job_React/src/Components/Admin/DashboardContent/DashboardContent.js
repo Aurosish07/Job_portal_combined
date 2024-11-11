@@ -1,116 +1,59 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import baseUrl from '../../../configBaseUrl';
-import JobApplicants from '../JobApplication/viewApplication.js';
-import { useNavigate } from 'react-router-dom';
+import './DashboardContent.css';
 
-
-function AllJobs() {
-  const [jobs, setJobs] = useState([]);
-  const [error, setError] = useState(null);
-  const [selectedJob, setSelectedJob] = useState(null);
-  const navigate = useNavigate(); // Use react-router's navigation hook
-
-  useEffect(() => {
-    const fetchJobsAndApplicants = async () => {
-      try {
-        const jobsResponse = await fetch(`${baseUrl.mainUrl}/api/role/employer/jobs`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        });
-
-        const jobsData = await jobsResponse.json();
-        if (!jobsResponse.ok) {
-          setError("Error fetching jobs");
-          return;
-        }
-
-        const applicationsResponse = await fetch(`${baseUrl.mainUrl}/api/role/employer/jobs/applications`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        });
-
-        const applicationsData = await applicationsResponse.json();
-        if (!applicationsResponse.ok) {
-          setError("Error fetching applications");
-          return;
-        }
-
-        const jobsWithApplicants = jobsData.map(job => {
-          const applicantCount = applicationsData.filter(app => app.jobId === job.id).length;
-          return { ...job, numberOfApplicants: applicantCount };
-        });
-
-        setJobs(jobsWithApplicants);
-      } catch (error) {
-        setError('Error fetching data: ' + error.message);
-      }
-    };
-
-    fetchJobsAndApplicants();
-  }, []);
-
-  const handleJobClick = (jobId) => {
-    // Navigate to a new route for the specific job
-    navigate(`joblist/applications/${jobId}`);
-  };
-
+function StatCard({ title, value, icon, color }) {
   return (
-    <div className="card-body">
-      {error ? (
-        <p className="text-danger">{error}</p>
-      ) : (
-        <>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Job Title</th>
-                <th scope="col">Location</th>
-                <th scope="col">Salary</th>
-                <th scope="col">No. of Applicants</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {jobs.length > 0 ? (
-                jobs.map((job) => (
-                  <tr key={job.id}>
-                    <th scope="row">{job.id}</th>
-                    <td>{job.title}</td>
-                    <td>{job.location}</td>
-                    <td>{job.salary}</td>
-                    <td>{job.numberOfApplicants || 0}</td>
-                    <td>
-                      <button
-                        style={{ background: '#35B6FF', color: '#fff' }}
-                        className="btn w-75"
-                        onClick={() => handleJobClick(job.id)}  // Navigate with jobId
-                      >
-                        View Applications
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center">
-                    No jobs found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </>
-      )}
+    <div className="stat-card" style={{ borderColor: color }}>
+      <div className="stat-card-content">
+        <h3>{title}</h3>
+        <p className="stat-value" style={{ color }}>{value}</p>
+      </div>
+      <div className="stat-icon" style={{ backgroundColor: color }}>
+        {icon}
+      </div>
     </div>
   );
 }
 
-
-
+function AllJobs({ jobs, onViewApplications }) {
+  return (
+    <div className="all-jobs-section">
+      <h2>All Jobs</h2>
+      <div className="jobs-header">
+        <input type="text" placeholder="Search jobs..." className="search-input" />
+        <button className="post-job-btn">Post New Job</button>
+      </div>
+      <table className="jobs-table">
+        <thead>
+          <tr>
+            <th>Job Title</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Applicants</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jobs.map((job) => (
+            <tr key={job.id}>
+              <td>{job.title}</td>
+              <td>{job.location}</td>
+              <td>{job.salary}</td>
+              <td>{job.numberOfApplicants || 0}</td>
+              <td>
+                <button className="view-applications-btn" onClick={() => onViewApplications(job.id)}>
+                  View Applications
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 function DashboardContent() {
   const [jobs, setJobs] = useState([]);
@@ -122,57 +65,46 @@ function DashboardContent() {
     pendingJobs: 0,
     closedJobs: 0,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobsAndApplicants = async () => {
       try {
-        // Fetch jobs posted by the employer
-        const jobsResponse = await fetch(`${baseUrl.mainUrl}/api/role/employer/jobs`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
+        const [jobsResponse, applicationsResponse] = await Promise.all([
+          fetch(`${baseUrl.mainUrl}/api/role/employer/jobs`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+          }),
+          fetch(`${baseUrl.mainUrl}/api/role/employer/jobs/applications`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+          })
+        ]);
 
-        const jobsData = await jobsResponse.json();
-        if (!jobsResponse.ok) {
-          setError("Error fetching jobs");
-          return;
+        if (!jobsResponse.ok || !applicationsResponse.ok) {
+          throw new Error("Error fetching data");
         }
 
-        // Fetch applicants for the jobs
-        const applicationsResponse = await fetch(`${baseUrl.mainUrl}/api/role/employer/jobs/applications`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
+        const [jobsData, applicationsData] = await Promise.all([
+          jobsResponse.json(),
+          applicationsResponse.json()
+        ]);
 
-        const applicationsData = await applicationsResponse.json();
-        if (!applicationsResponse.ok) {
-          setError("Error fetching applications");
-          return;
-        }
+        const jobsWithApplicants = jobsData.map(job => ({
+          ...job,
+          numberOfApplicants: applicationsData.filter(app => app.jobId === job.id).length
+        }));
 
-        // Set fetched jobs and applicants to state
-        setJobs(jobsData);
+        setJobs(jobsWithApplicants);
         setApplicants(applicationsData);
 
-        console.log(jobsData);
-
-        // Calculate dashboard statistics
-        const totalJobs = jobsData.length;
-        const closedJobs = jobsData.filter(job => job.status === 'closed').length;
-        const activeJobs = totalJobs - closedJobs; // Active jobs are those that are not closed
-        const pendingJobs = jobsData.filter(job => job.status === 'pending').length;
-
         setDashboardStats({
-          totalJobs,
-          activeJobs,
-          pendingJobs,
-          closedJobs,
+          totalJobs: jobsData.length,
+          activeJobs: jobsData.filter(job => job.status !== 'closed').length,
+          pendingJobs: jobsData.filter(job => job.status === 'pending').length,
+          closedJobs: jobsData.filter(job => job.status === 'closed').length,
         });
 
       } catch (error) {
@@ -184,74 +116,39 @@ function DashboardContent() {
     fetchJobsAndApplicants();
   }, []);
 
+  const handleViewApplications = (jobId) => {
+    navigate(`joblist/applications/${jobId}`);
+  };
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
   return (
-    <>
-      <div id="layoutSidenav_content">
-        <main>
-          <div className='py-2 bg-white ps-4'>
-            <span><Link to='/'>Home</Link></span>
-            <span className='px-2'>&#47;</span>
-            <span>Dashboard</span>
-          </div>
-          <div className="container-fluid px-4 py-2">
-            <div className="row">
-
-              <div className="col-xl-3 col-md-6">
-                <div className="card text-white mb-4" style={{ backgroundColor: '#5856D6' }}>
-                  <div className="card-body">
-                    <h2>{dashboardStats.totalJobs}</h2>
-                    <h5>Total Jobs</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6">
-                <div className="card text-white mb-4" style={{ backgroundColor: '#3399FF' }}>
-                  <div className="card-body">
-                    <h2>{dashboardStats.activeJobs}</h2>
-                    <h5>Active Jobs</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6">
-                <div className="card text-white mb-4" style={{ backgroundColor: '#F9B115' }}>
-                  <div className="card-body">
-                    <h2>{dashboardStats.pendingJobs}</h2>
-                    <h5>Pending Jobs</h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-3 col-md-6">
-                <div className="card text-white mb-4" style={{ backgroundColor: '#E55353' }}>
-                  <div className="card-body">
-                    <h2>{dashboardStats.closedJobs}</h2>
-                    <h5>Closed Jobs</h5>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <AllJobs jobs={jobs} applicants={applicants} />
-
-          </div>
-        </main>
-
-        <footer className="py-4 bg-light mt-auto">
-          <div className="container-fluid px-4">
-            <div className="d-flex align-items-center justify-content-between small">
-              <div className="text-muted">Copyright &copy; 2024</div>
-              <div>
-                <Link to="#">Privacy Policy</Link>
-                &middot;
-                <Link to="#">Terms &amp; Conditions</Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+    <div className="dashboard-content">
+      <div className="dashboard-header">
+        <h1>Dashboard</h1>
+        <button className="customize-btn">Customize Dashboard</button>
       </div>
-    </>
-  )
+      <div className="stats-container">
+        <StatCard title="Total Jobs" value={dashboardStats.totalJobs} icon="📊" color="#5856D6" />
+        <StatCard title="Active Jobs" value={dashboardStats.activeJobs} icon="🕒" color="#3399FF" />
+        <StatCard title="Pending Jobs" value={dashboardStats.pendingJobs} icon="⏳" color="#F9B115" />
+        <StatCard title="Closed Jobs" value={dashboardStats.closedJobs} icon="✅" color="#E55353" />
+      </div>
+      <AllJobs jobs={jobs} onViewApplications={handleViewApplications} />
+      <footer className="dashboard-footer">
+        <div className="footer-content">
+          <p>&copy; 2024 Job Portal. All rights reserved.</p>
+          <div>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <span> | </span>
+            <Link to="/terms-conditions">Terms & Conditions</Link>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
 }
 
-
-export default DashboardContent
+export default DashboardContent;

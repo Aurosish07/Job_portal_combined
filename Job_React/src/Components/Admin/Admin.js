@@ -2,18 +2,21 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import SideNavbar from './SideNavbar/SideNavbar';
 import DashboardContent from './DashboardContent/DashboardContent';
-import JobApplicants from './JobApplication/viewApplication';
+import './Admin.css';
 
 function Admin() {
   const location = useLocation();
 
-  // Check if the current path is either '/admin/jobpost' or '/admin/joblist'
-  const showDashboard = !location.pathname.startsWith('/admin/jobpost') && !location.pathname.startsWith('/admin/joblist') && !location.pathname.startsWith('/admin/joblist/applications');
+  const showDashboard = !location.pathname.startsWith('/admin/jobpost') && 
+                        !location.pathname.startsWith('/admin/joblist') && 
+                        !location.pathname.startsWith('/admin/joblist/applications');
 
   return (
-    <div className='d-flex'>
+    <div className="admin-layout">
       <SideNavbar />
-      {showDashboard ? <DashboardContent /> : <Outlet />}
+      <main className="admin-main-content">
+        {showDashboard ? <DashboardContent /> : <Outlet />}
+      </main>
     </div>
   );
 }

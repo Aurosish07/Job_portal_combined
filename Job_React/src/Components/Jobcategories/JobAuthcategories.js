@@ -8,30 +8,24 @@ function JobAuthcategories() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [locationDetected, setLocationDetected] = useState(false);
-  const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 1,
-  });
   const [searchParams, setSearchParams] = useState({
     title: '',
     location: '',
-    page: 1,
-    limit: 8, // Default to 8 jobs per page
+    limit: 10, // Always fetch 10 jobs
   });
 
-  const fetchJobs = async () => {
+  const fetchJobs = async (useLocation = true) => {
     setLoading(true);
-    const { title, location, page, limit } = searchParams;
+    const { title, location, limit } = searchParams;
 
     try {
       // Create a query object only if title or location is provided, otherwise, omit them
       const queryParams = {
-        page: page.toString(),
         limit: limit.toString(),
       };
 
       if (title) queryParams.title = title;
-      if (location) queryParams.location = location;
+      if (useLocation && location) queryParams.location = location;
 
       // Construct query string
       const query = new URLSearchParams(queryParams).toString();
@@ -47,12 +41,13 @@ function JobAuthcategories() {
 
       if (response.ok) {
         const result = await response.json();
-        setJobs(result.jobs);
-        setPagination({
-          currentPage: parseInt(result.currentPage, 10),
-          totalPages: parseInt(result.totalPages, 10),
-        });
-        console.log(result);
+        if (result.jobs.length === 0 && useLocation) {
+          // If no jobs found with location, fetch jobs without location
+          fetchJobs(false);
+        } else {
+          setJobs(result.jobs);
+          console.log(result);
+        }
       } else {
         const errorData = await response.json();
         setError(`Error: ${errorData.message}`);
@@ -61,24 +56,6 @@ function JobAuthcategories() {
       setError('An error occurred while fetching jobs.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (pagination.currentPage < pagination.totalPages) {
-      setSearchParams((prev) => ({
-        ...prev,
-        page: prev.page + 1,
-      }));
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (pagination.currentPage > 1) {
-      setSearchParams((prev) => ({
-        ...prev,
-        page: prev.page - 1,
-      }));
     }
   };
 
@@ -120,6 +97,16 @@ function JobAuthcategories() {
     }
   }, [locationDetected, searchParams]);
 
+  // Clear error after 2 seconds
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   return (
     <div className='border' style={{ background: '#ECF0F1' }}>
       <div>
@@ -131,18 +118,7 @@ function JobAuthcategories() {
           {error && <p>{error}</p>}
           <div className='jobs_cards_container'>
             {jobs.length > 0 ? (
-              <>
-                <Jobcard jobs={jobs} />
-                <div className="pagination-controls d-flex justify-content-center my-3">
-                  <button onClick={handlePreviousPage} disabled={pagination.currentPage === 1}>
-                    Previous
-                  </button>
-                  <p>{pagination.currentPage} of {pagination.totalPages}</p>
-                  <button onClick={handleNextPage} disabled={pagination.currentPage === pagination.totalPages}>
-                    Next
-                  </button>
-                </div>
-              </>
+              <Jobcard jobs={jobs} />
             ) : (
               <p>No jobs found.</p>
             )}

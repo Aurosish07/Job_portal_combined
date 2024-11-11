@@ -1,36 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react'; // Icons for UI
-import { useParams, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { useParams, Link } from 'react-router-dom';
 import baseUrl from '../../../configBaseUrl';
 
-// Mock components to avoid importing external UI libraries
-const Button = ({ variant, size, children, ...props }) => (
-    <button {...props} className={`px-4 py-2 rounded ${variant === 'outline' ? 'border border-gray-300' : ''} ${size === 'sm' ? 'text-sm' : ''}`}>
-        {children}
-    </button>
-);
-
-const Input = ({ className, ...props }) => (
-    <input {...props} className={`border border-gray-300 rounded px-4 py-2 ${className}`} />
-);
-
-const Table = ({ children }) => <table className="min-w-full bg-white divide-y divide-gray-200">{children}</table>;
-const TableHeader = ({ children }) => <thead className="bg-gray-100">{children}</thead>;
-const TableBody = ({ children }) => <tbody>{children}</tbody>;
-const TableRow = ({ children }) => <tr>{children}</tr>;
-const TableHead = ({ children }) => <th className="px-4 py-2 text-left text-sm font-semibold">{children}</th>;
-const TableCell = ({ children }) => <td className="px-4 py-2 border-b border-gray-200">{children}</td>;
-
-export default function JobApplicants() {
+const JobApplicants = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [applicants, setApplicants] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { jobId } = useParams(); // Get jobId from URL
+    const { jobId } = useParams();
 
     const applicantsPerPage = 5;
 
-    // Fetch job applicants by jobId
     useEffect(() => {
         const fetchApplicants = async () => {
             if (!jobId) {
@@ -45,14 +25,12 @@ export default function JobApplicants() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    credentials: 'include', // Include credentials for authentication
+                    credentials: 'include',
                 });
                 if (!response.ok) {
-                    const errorMessage = `Error: ${response.status} ${response.statusText}`;
-                    throw new Error(errorMessage);
+                    throw new Error(`Error: ${response.status} ${response.statusText}`);
                 }
                 const data = await response.json();
-                console.log(data);
                 setApplicants(data);
             } catch (error) {
                 console.error("Error fetching applicants:", error);
@@ -64,7 +42,6 @@ export default function JobApplicants() {
         fetchApplicants();
     }, [jobId]);
 
-    // Filter applicants by search term
     const filteredApplicants = applicants.filter(applicant =>
         applicant.User.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         applicant.User.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -77,123 +54,137 @@ export default function JobApplicants() {
 
     const totalPages = Math.ceil(filteredApplicants.length / applicantsPerPage);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>Loading...</div>;
+    }
 
     return (
-        <>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div className="py-2 bg-white ps-4">
-                        <span><Link to="/">Home</Link></span>
-                        <span className="px-2">&#47;</span>
-                        <span>Job Applicants - {jobId}</span>
-                    </div>
-                    <div className="container-fluid px-4 py-2">
-                        <div className="row">
-                            <div className="col-xl-12 col-md-12">
-                                <div className="card mb-4">
-                                    <div className="card-header">
-                                        <h1 className="text-2xl font-bold mb-0">Job Applicants - {jobId}</h1>
-                                    </div>
-                                    <div className="card-body">
-                                        {/* Search Input */}
-                                        <div className="flex justify-between items-center mb-6">
-                                            <div className="relative">
-                                                <Input
-                                                    type="text"
-                                                    placeholder="Search applicants..."
-                                                    value={searchTerm}
-                                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                                    className="pl-10 pr-4 py-2 w-64"
-                                                />
-                                                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-                                            </div>
-                                            <div className="text-sm text-gray-500">
-                                                Showing {indexOfFirstApplicant + 1} - {Math.min(indexOfLastApplicant, filteredApplicants.length)} of {filteredApplicants.length} applicants
-                                            </div>
-                                        </div>
-
-                                        {/* Applicants Table */}
-                                        {filteredApplicants.length === 0 ? (
-                                            <div className="text-gray-500">No applicants found</div>
-                                        ) : (
-                                            <Table>
-                                                <TableHeader>
-                                                    <TableRow>
-                                                        <TableHead>Name</TableHead>
-                                                        <TableHead>Email</TableHead>
-                                                        <TableHead>Experience</TableHead>
-                                                        <TableHead>Skills</TableHead>
-                                                        <TableHead>Status</TableHead>
-                                                        <TableHead>Actions</TableHead>
-                                                    </TableRow>
-                                                </TableHeader>
-                                                <TableBody>
-                                                    {currentApplicants.map((applicant) => (
-                                                        <TableRow key={applicant.id}>
-                                                            <TableCell>{applicant.User.name || 'N/A'}</TableCell>
-                                                            <TableCell>{applicant.User.email}</TableCell>
-                                                            <TableCell>{applicant.experience || 'N/A'}</TableCell>
-                                                            <TableCell>{applicant.skills || 'N/A'}</TableCell>
-                                                            <TableCell>
-                                                                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${applicant.status === 'Pending' ? 'bg-yellow-200 text-yellow-800' :
-                                                                        applicant.status === 'Interviewed' ? 'bg-blue-200 text-blue-800' :
-                                                                            applicant.status === 'Rejected' ? 'bg-red-200 text-red-800' :
-                                                                                'bg-green-200 text-green-800'}`}>
-                                                                    {applicant.status || 'Unknown'}
-                                                                </span>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Button variant="outline" size="sm">View Details</Button>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        )}
-
-                                        {/* Pagination */}
-                                        <div className="flex justify-between items-center mt-6">
-                                            <Button
-                                                variant="outline"
-                                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                                disabled={currentPage === 1}
-                                                aria-label="Previous Page"
-                                            >
-                                                <ChevronLeft className="h-4 w-4 mr-2" /> Previous
-                                            </Button>
-                                            <span className="text-sm text-gray-500">
-                                                Page {currentPage} of {totalPages}
-                                            </span>
-                                            <Button
-                                                variant="outline"
-                                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                                disabled={currentPage === totalPages}
-                                                aria-label="Next Page"
-                                            >
-                                                Next <ChevronRight className="h-4 w-4 ml-2" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-                <footer className="py-4 bg-light mt-auto">
-                    <div className="container-fluid px-4">
-                        <div className="d-flex align-items-center justify-content-between small">
-                            <div className="text-muted">Copyright &copy; 2024</div>
-                            <div>
-                                <Link to="#">Privacy Policy</Link>
-                                &middot;
-                                <Link to="#">Terms &amp; Conditions</Link>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
+        <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Job Applicants - {jobId}</h1>
+                <nav>
+                    <Link to="/" style={{ color: '#3b82f6', textDecoration: 'none' }}>Home</Link>
+                    <span style={{ margin: '0 8px' }}>/</span>
+                    <span>Job Applicants - {jobId}</span>
+                </nav>
             </div>
-        </>
-    );
 
-}
+            <div style={{ marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <input
+                        type="text"
+                        placeholder="Search applicants..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '4px', width: '250px' }}
+                    />
+                    <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                        Showing {indexOfFirstApplicant + 1} - {Math.min(indexOfLastApplicant, filteredApplicants.length)} of {filteredApplicants.length} applicants
+                    </div>
+                </div>
+
+                {filteredApplicants.length === 0 ? (
+                    <div style={{ textAlign: 'center', color: '#6b7280', padding: '20px 0' }}>No applicants found</div>
+                ) : (
+                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f3f4f6' }}>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Name</th>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Email</th>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Experience</th>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Skills</th>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Status</th>
+                                <th style={{ padding: '12px', textAlign: 'left', borderBottom: '1px solid #e5e7eb' }}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentApplicants.map((applicant) => (
+                                <tr key={applicant.id}>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>{applicant.User.name || 'N/A'}</td>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>{applicant.User.email}</td>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>{applicant.experience || 'N/A'}</td>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>{applicant.skills || 'N/A'}</td>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
+                                        <span style={{
+                                            padding: '4px 8px',
+                                            borderRadius: '9999px',
+                                            fontSize: '12px',
+                                            fontWeight: '600',
+                                            backgroundColor:
+                                                applicant.status === 'Pending' ? '#fef3c7' :
+                                                    applicant.status === 'Interviewed' ? '#dbeafe' :
+                                                        applicant.status === 'Rejected' ? '#fee2e2' :
+                                                            '#d1fae5',
+                                            color:
+                                                applicant.status === 'Pending' ? '#92400e' :
+                                                    applicant.status === 'Interviewed' ? '#1e40af' :
+                                                        applicant.status === 'Rejected' ? '#991b1b' :
+                                                            '#065f46'
+                                        }}>
+                                            {applicant.status || 'Unknown'}
+                                        </span>
+                                    </td>
+                                    <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
+                                        <button style={{
+                                            padding: '6px 12px',
+                                            backgroundColor: '#f3f4f6',
+                                            border: '1px solid #d1d5db',
+                                            borderRadius: '4px',
+                                            fontSize: '14px',
+                                            cursor: 'pointer'
+                                        }}>View Details</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                        style={{
+                            padding: '6px 12px',
+                            backgroundColor: '#f3f4f6',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '4px',
+                            cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                            opacity: currentPage === 1 ? 0.5 : 1
+                        }}
+                    >
+                        Previous
+                    </button>
+                    <span style={{ fontSize: '14px', color: '#6b7280' }}>
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                        style={{
+                            padding: '6px 12px',
+                            backgroundColor: '#f3f4f6',
+                            border: '1px solid #d1d5db',
+                            borderRadius: '4px',
+                            cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                            opacity: currentPage === totalPages ? 0.5 : 1
+                        }}
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
+                <p>&copy; 2024 EINCA. All rights reserved.</p>
+                <div style={{ marginTop: '8px' }}>
+                    <Link to="#" style={{ color: '#3b82f6', textDecoration: 'none' }}>Privacy Policy</Link>
+                    <span style={{ margin: '0 8px' }}>•</span>
+                    <Link to="#" style={{ color: '#3b82f6', textDecoration: 'none' }}>Terms &amp; Conditions</Link>
+                </div>
+            </footer>
+        </div>
+    );
+};
+
+export default JobApplicants;

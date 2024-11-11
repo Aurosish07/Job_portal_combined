@@ -1,17 +1,15 @@
-const categories = [
-  {categoryName:'Freshers Job'},
-  {categoryName:'IT/Software'},
-  {categoryName:'Core Technical'},
-  {categoryName:'Govt Jobs'},
-  {categoryName:'MBA'},
-  {categoryName:'Internship'},
-  {categoryName:'Diploma'},
-  {categoryName:'Defence'},
-  {categoryName:'BPO'},
-  {categoryName:'Part Time'},
-  {categoryName:'Bank'},
-  {categoryName:'Walkin'},
-  {categoryName:'Teaching'},
-];
+function JobTypes({ title, image }) {
 
-export default categories;
+  return (
+
+    <div className="job-card">
+      <div className="job-card-content">
+        <img src={image}></img>
+        <h2 className="job-title">{title}</h2>
+      </div>
+    </div>
+
+  )
+}
+
+export default JobTypes;

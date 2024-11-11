@@ -1,0 +1,179 @@
+.jobs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.jobs-section {
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.view-all {
+    color: #0066ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.scroll-container {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroll-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+/* Styles for the company cards */
+.company-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    min-width: 200px;
+    /* Adjust this value to control the minimum width of company cards */
+}
+
+.company-card:hover {
+    transform: translateY(-2px);
+}
+
+.company-logo {
+    width: 60px;
+    height: 60px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0066ff;
+    margin: 0 auto 1rem;
+}
+
+/* Styles for the job position cards */
+.job-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    /* Adjust this value to control the minimum width of job position cards */
+    max-width: 400px;
+    /* Adjust this value to control the maximum width of job position cards */
+}
+
+/* Add this class to the scroll container for the Popular Job Positions section */
+.scroll-container.popular-positions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(300px, 400px);
+    /* Adjust these values to control the width range of job position cards */
+    overflow-x: auto;
+}
+
+.recommendation-banner {
+    background: #f0f7ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.add-now-btn {
+    background: #0066ff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .jobs-container {
+        padding: 1rem;
+    }
+
+    .recommendation-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+@media (max-width: 768px) {
+    .jobs-container {
+        padding: 1rem;
+    }
+
+    .recommendation-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .scroll-container.popular-positions {
+        grid-auto-columns: minmax(250px, 350px);
+    }
+}
+
+.scroll-container.popular-positions {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(350px, 450px);
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.job-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-width: 350px;
+    max-width: 450px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.job-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}

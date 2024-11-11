@@ -1,5 +1,141 @@
-.phone_field{
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  padding: .1rem 0.5rem;;
+.registerDiv_container {
+  background-color: #f0f4f8;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.registerDiv {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+}
+
+.registerDiv_image {
+  width: 50%;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f0fe;
+}
+
+.registerDiv_image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.registerForm {
+  width: 50%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.registerForm form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.registerForm h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.registerForm small {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #3a7bc8;
+}
+
+.btn-login {
+  background-color: transparent;
+  border: 1px solid #4a90e2;
+  color: #4a90e2;
+  margin-top: 1rem;
+  margin-left: 0.9rem;
+}
+
+.btn-login:hover {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .registerDiv {
+    flex-direction: column;
+  }
+
+  .registerDiv_image,
+  .registerForm {
+    width: 100%;
+  }
+
+  .registerDiv_image {
+    padding: 2rem 2rem 0;
+  }
+
+  .registerForm {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .registerDiv_container {
+    padding: 1rem;
+  }
+
+  .registerForm {
+    padding: 1.5rem;
+  }
+
+  .registerForm h2 {
+    font-size: 1.5rem;
+  }
 }

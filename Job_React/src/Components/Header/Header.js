@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../Image/logo/EZ-LOGO.png';
+import logo from '../../Image/logo/png/Geinca-main-logo-120x16.png';
 import './Header.css';
 import baseUrl from '../../configBaseUrl';
 import { AuthContext } from '../../context/AuthContext';
@@ -41,7 +41,7 @@ function Header() {
       <div className='container-fluid py-2 d-flex align-items-center justify-content-between'>
         <div>
           <Link className="navbar-brand" to="#">
-            <img src={logo} alt='logo' width='60' />
+            <img src={logo} alt='logo' width='120' height='18'/>
           </Link>
         </div>
 

@@ -1,62 +1,107 @@
-.job-card {
-  background: #fff;
+.job-card-compact {
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(36, 36, 36, 0.356);
-  width: 300px;
-  overflow: hidden;
-  text-align: center;
+  padding: 1rem;
+  min-width: 280px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
-.job-header {
-  padding: 20px;
-  border-bottom: 1px solid #e4e4e4;
+.job-card-compact:hover {
+  transform: translateY(-2px);
+}
+
+.job-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .company-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-bottom: 10px;
+  width: 40px;
+  height: 40px;
+  background: #f0f7ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #0066ff;
+}
+
+.posted-time {
+  color: #666;
+  font-size: 0.875rem;
 }
 
 .job-title {
-  margin: 0;
-  font-size: 20px;
+  font-size: 1.125rem;
+  font-weight: 600;
   color: #333;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
 }
 
 .company-name {
-  margin: 0;
-  color: #777;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
-.job-details {
-  padding: 20px;
-  text-align: left;
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  color: #666;
 }
 
-.job-details p {
-  margin: 10px 0;
-  font-size: 14px;
-  color: #555;
+.location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
 }
 
-.job-footer {
-  padding: 20px;
-  border-top: 1px solid #e4e4e4;
+.view-job-link {
+  display: inline-block;
+  color: #0066ff;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
-.apply-btn {
-  background: #1E55B3;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+.view-job-link:hover {
+  text-decoration: underline;
 }
 
-.apply-btn:hover {
-  background: #0056b3;
+/* Original job card styles for the positions section */
+.job-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.job-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.requirement-tag {
+  background: #f0f7ff;
+  color: #0066ff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
