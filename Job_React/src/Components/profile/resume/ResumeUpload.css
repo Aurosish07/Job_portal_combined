@@ -1,0 +1,114 @@
+.resume-section {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.resume-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 12px 0;
+}
+
+.description {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.upload-area {
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-button {
+    background: #1A91FF;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.upload-button:hover {
+    background: rgba(26, 145, 255, 0.9);
+}
+
+.format-text {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.create-resume-box {
+    background: #F5F8FF;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icon-container {
+    background: white;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.create-resume-content {
+    flex: 1;
+}
+
+.create-resume-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 4px 0;
+}
+
+.create-resume-content p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.create-resume-button {
+    background: none;
+    border: none;
+    color: #1A91FF;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.create-resume-button:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .create-resume-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .create-resume-button {
+        margin-top: 12px;
+    }
+}

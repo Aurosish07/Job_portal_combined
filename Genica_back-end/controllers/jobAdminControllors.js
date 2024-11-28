@@ -4,7 +4,7 @@ import { Op } from "sequelize";
 //Create jobs
 export const createJob = async (req, resp) => {
 
-    const { title, description, requirements, location, salary , company } = req.body;
+    const { title, description, requirements, location, salary, company } = req.body;
     const employerId = req.user.userId;
 
     try {
@@ -81,7 +81,7 @@ export const updateJob = async (req, resp) => {
     try {
 
         const { id } = req.params;
-        const { title, description, requirements, location, salary , company} = req.body;
+        const { title, description, requirements, location, salary, company } = req.body;
 
         const employerId = req.user.userId;
 

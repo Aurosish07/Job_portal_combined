@@ -4,6 +4,14 @@ import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import roleRoutes from "./routes/roleRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
+import profilerouter0 from "./routes/profileRoutes/AchivementRoutes.js"
+import profilerouter1 from "./routes/profileRoutes/certificateRoutes.js"
+import profilerouter2 from "./routes/profileRoutes/EducationRoutes.js"
+import profilerouter3 from "./routes/profileRoutes/EmployeeRoutes.js"
+import profilerouter4 from "./routes/profileRoutes/ExperienceRoutes.js"
+import profilerouter5 from "./routes/profileRoutes/projectsRoutes.js"
+import profilerouter6 from "./routes/profileRoutes/ResumeRoutes.js"
+import profilerouter7 from "./routes/profileRoutes/skillRoutes.js"
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -35,6 +43,15 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);        // Authentication routes
 app.use("/api/role", roleRoutes);        // Role-based routes
 app.use("/api/role/employer", jobRoutes);         // Job-related routes
+
+app.use("/api/employee", profilerouter0);
+app.use("/api/employee", profilerouter1);
+app.use("/api/employee", profilerouter2);
+app.use("/api/employee", profilerouter3);
+app.use("/api/employee", profilerouter4);
+app.use("/api/employee", profilerouter5);
+app.use("/api/employee", profilerouter6);
+app.use("/api/employee", profilerouter7);
 
 // Serve Static Files in Production
 if (process.env.NODE_ENV === 'production') {

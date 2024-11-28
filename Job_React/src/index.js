@@ -14,6 +14,7 @@ import JobPost from './Components/Admin/JobPost/JobPost.js';
 import AllJobs from './Components/Admin/JobListing/JobListing.js';
 import JobApplicants from './Components/Admin/JobApplication/viewApplication.js';
 import AuthProvider from './context/AuthContext.js'; // Make sure it's correctly imported as a named export
+import ProfilePage from './Components/profile/profile.js';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
           <Route path='joblist' element={<AllJobs />} />
           <Route path='joblist/applications/:jobId' element={<JobApplicants />} />
         </Route>
+        <Route path='/profile' element={<ProfilePage />} />
       </Route>
     </>
   )

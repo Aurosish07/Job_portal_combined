@@ -1,0 +1,142 @@
+.projects-section {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 24px;
+    width: 100%;
+    max-width:100%;
+    margin: 24px auto;
+}
+
+.projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.projects-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.add-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background: #0056b3;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: row;
+}
+
+.project-info {
+    flex: 1;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.project-title {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.project-actions {
+    display: flex;
+    
+}
+
+.edit-button,
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.edit-button {
+    color: #007bff;
+}
+
+.delete-button {
+    color: #ff4444;
+}
+
+.project-description {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
+}
+
+.project-technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.technology-tag {
+    background: #f3f4f6;
+    color: #4b5563;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.project-details {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    flex-direction: column;
+}
+
+.project-duration {
+    font-size: 14px;
+    color: #666;
+}
+
+.project-link {
+    font-size: 14px;
+    color: #007bff;
+    /* margin-left: auto; */
+    /* display: flex;
+    align-items: center;
+    gap: 4px; */
+}
+
+.project-link:hover {
+    color: #0056b3;
+}

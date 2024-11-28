@@ -3,6 +3,12 @@ import { sequelize } from '../config/db.js';
 import User from './userModel.js';
 
 const Auth = sequelize.define('Auth', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Anamous'
+
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -12,8 +18,8 @@ const Auth = sequelize.define('Auth', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    role:{
-        type:DataTypes.STRING,
+    role: {
+        type: DataTypes.STRING,
         // defaultValue:'user',
     },
     userId: {

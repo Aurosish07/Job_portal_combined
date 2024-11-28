@@ -24,7 +24,7 @@ const Resume = sequelize.define('Resume', {
     timestamps: true, // This adds createdAt and updatedAt columns
 });
 
-User.hasOne(Resume , {foreignKey: 'userId'});
-Resume.belongsTo(User , {foreignKey: 'userId'});
+User.hasOne(Resume, { foreignKey: 'userId' });
+Resume.belongsTo(User, { foreignKey: 'userId' });
 
 export default Resume;

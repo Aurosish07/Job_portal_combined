@@ -47,8 +47,9 @@
 
 .registerForm h2 {
   font-size: 2rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
   color: #333;
+  text-align: center;
 }
 
 .registerForm small {
@@ -99,12 +100,25 @@
   border: 1px solid #4a90e2;
   color: #4a90e2;
   margin-top: 1rem;
-  margin-left: 0.9rem;
+  margin-left: 0.1rem;
 }
 
 .btn-login:hover {
   background-color: #4a90e2;
   color: #fff;
+}
+
+.name-block {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-group-half {
+  flex: 1;
+}
+
+.form-group-half .form-control {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
