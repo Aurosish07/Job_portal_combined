@@ -173,7 +173,7 @@ function JobPost() {
       </div>
 
       <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '14px', color: '#6b7280' }}>
-        <p>&copy; 2024 EINCA. All rights reserved.</p>
+        <p>&copy; 2024 GEINCA. All rights reserved.</p>
         <div style={{ marginTop: '8px' }}>
           <Link to="#" style={{ color: '#3b82f6', textDecoration: 'none' }}>Privacy Policy</Link>
           <span style={{ margin: '0 8px' }}>•</span>
