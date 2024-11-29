@@ -32,7 +32,7 @@ connectDB();
 
 // Middleware
 app.use(cors({
-    origin: 'https://job-portal-combined.onrender.com',
+    origin: 'https://job-portal-combined-dyfe.onrender.com',
     credentials: true
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
